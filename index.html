@@ -631,9 +631,18 @@ function drinkAt(v){
   play(d.pre,function(){
     ask('隣の席に、めっちゃ美人な女の子がいる…。どうする？',[
       {label:'ナンパする',fn:function(){ play(buildNanpa().concat([sleepStep()]),function(){afterAction('drink');}); }},
-      {label:'やめておく',fn:function(){ play([st('翔馬','…いやいや、今日は自分を大事にするっしょ！')].concat(d.tail(),[sleepStep()]),function(){afterAction('drink');}); }}
+      {label:'やめておく',fn:function(){ play([st('翔馬','…いやいや、今日は自分を大事にするっしょ！')].concat(d.tail(),(S.stolen?[]:bikeSteps()),[sleepStep()]),function(){afterAction('drink');}); }}
     ]);
   });
+}
+function bikeSteps(){
+  S.c.bike++;
+  return [
+    st('','帰り道。駐輪場に 鍵のささった自転車が あった。',{e:'night'}),
+    st('翔馬','ちょっと借りるだけっしょ！ワンチャンあるっしょ！'),
+    st('','翔馬は 自転車を盗んだ。',{fn:function(){S.stolen=true;}}),
+    st('翔馬','夜風が気持ちいい〜！さいこぉ！（罪悪感は寝て忘れる）')
+  ];
 }
 function buildNanpa(){
   S.c.nanpa++;
@@ -704,7 +713,7 @@ function buildDrink(v){
   a.push(st('','酒が進んで、翔馬のテンションが おかしくなってきた。'));
   return {pre:a,tail:function(){
     var t=[], r=Math.random();
-    if(r<0.45){
+    if(r<0.5){
       S.c.fight++;
       t.push(st('翔馬','おい、見てんじゃねえよ！',{e:'fight',shake:true}));
       t.push(st('客','あ？今なんつった？'));
@@ -712,12 +721,6 @@ function buildDrink(v){
       t.push(st('','ガッ！！ ジョッキで 頭をぶん殴られた。',{e:'hit',fx:{hp:-25},fn:function(){S.hurt=true;$('hurtSvg').hidden=false;}}));
       t.push(st('翔馬','いってぇ！…さいこぉ…じゃない！やば！',{e:'none'}));
       t.push(st('','翔馬は 怪我をして、フラフラで帰ってきた。'));
-    }else if(r<0.8){
-      S.c.bike++;
-      t.push(st('','帰り道。駐輪場に 鍵のささった自転車が あった。',{e:'night'}));
-      t.push(st('翔馬','ちょっと借りるだけっしょ！ワンチャンあるっしょ！'));
-      t.push(st('','翔馬は 自転車を盗んだ。',{fn:function(){S.stolen=true;}}));
-      t.push(st('翔馬','夜風が気持ちいい〜！さいこぉ！（罪悪感は寝て忘れる）'));
     }else{
       t.push(st('翔馬','…今日は平和だったな。いいね！',{e:'none'}));
       t.push(st('','何事もなく、飲み終えた。'));
