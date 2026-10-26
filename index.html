@@ -166,6 +166,9 @@ button{font-family:var(--font); color:var(--ink)}
 .ttl-sub{font-size:clamp(16px,5vw,22px); color:#fff; letter-spacing:.12em; text-shadow:2px 2px 0 #03102a}
 .ttl-tap{margin-top:22px; font-size:15px; color:#fff; letter-spacing:.2em; text-shadow:2px 2px 0 #03102a; animation:blink .9s steps(1,end) infinite}
 @media (prefers-reduced-motion:reduce){.ishi,.ishi-sub,.wolfs,.wname,.wsub,.ttl-in,.ttl-bg,.ttl-tap{animation:none}}
+.stg-story{background:#000; justify-content:center; align-items:center}
+.sto-text{white-space:pre-wrap; font-size:clamp(17px,5.2vw,22px); line-height:1.9; letter-spacing:.06em; color:#f3f7ff; max-width:22em; min-height:11em; display:flex; align-items:center; justify-content:center; text-align:center}
+.sto-arrow{position:absolute; left:0; right:0; bottom:calc(max(24px,env(safe-area-inset-bottom,0px)) + 16px); text-align:center; color:var(--gold); font-size:15px; animation:blink .8s steps(1,end) infinite}
 </style>
 
 <div class="app" id="app">
@@ -205,16 +208,6 @@ button{font-family:var(--font); color:var(--ink)}
   <nav class="menu panel" id="menu" aria-label="今日の行動"></nav>
 </div>
 
-<div class="ov2" id="title">
-  <div class="card panel">
-    <div class="pic"><img id="titleImg" alt="" src=""></div>
-    <h2>翔馬育成シミュレーション</h2>
-    <div class="sub">～ 自立への道（※道は塞がれています）～<br>35歳、現金1万円、Pay残高1万円。7日間で自立を目指せ！</div>
-    <div><label for="who">お誕生日の人の名前（空欄でもOK）</label><input id="who" type="text" maxlength="12" autocomplete="off" placeholder="例：たろう"></div>
-    <button class="btn" id="start" type="button">ゲームスタート</button>
-  </div>
-</div>
-
 <div class="ov2" id="result" hidden>
   <div class="card panel res">
     <div class="big">～ 7日間の結果発表 ～</div>
@@ -234,6 +227,7 @@ button{font-family:var(--font); color:var(--ink)}
   <div class="stg" id="stg2"><svg class="wolfs" id="wolfs" viewBox="0 0 52 23" aria-hidden="true"></svg><div class="wname">オオカミ軍団</div><div class="wsub">WOLF PACK</div></div>
   <div class="stg" id="stg3"><div class="ttl-bg" id="ttlBg"></div>
     <div class="ttl-in"><div class="ttl-main">松本翔馬<br>成り上がり伝説</div><div class="ttl-sub">〜35歳何でも挑戦〜</div><div class="ttl-tap">▼ 画面をタップ ▼</div></div></div>
+  <div class="stg stg-story" id="stg4"><div class="sto-text" id="stoText"></div><div class="sto-arrow" id="stoArrow" hidden>▼</div></div>
 </div>
 
 <script>
@@ -937,21 +931,17 @@ function freshState(name){
     c:{job:0,kaa:0,huntOk:0,huntQuit:0,skip:0,drinkOk:0,drinkFail:0,fight:0,bike:0,game:0,borrow:0,nap:0,study:0,bath:0,yt:0,mom:0,solo:0,eat:0,rest:0,nights:0,pachi:0,aka:0,nanpa:0}};
 }
 function startGame(){
-  var nm=($('who').value||'').trim();
-  try{localStorage.setItem('shoma_who',nm);}catch(e){}
+  var nm='';
   S=freshState(nm);
   jobs=shuffle(JOBS); games=shuffle(GAMES); borrows=shuffle(BORROWS);
   var sc=$('scene'); sc.classList.remove('street'); $('tag').hidden=true; $('tag').dataset.k=''; $('hurtSvg').hidden=true;
   setScene('none'); showCall(null);
-  $('title').hidden=true; $('result').hidden=true;
+  $('result').hidden=true;
   paint(); layout();
   play([st('翔馬',GREETS[0],{e:'none',idle:true})],unlock);
 }
-$('titleImg').src=$('sceneImg').src;
 $('hurtSvg').innerHTML=bandage();
-try{var saved=localStorage.getItem('shoma_who'); if(saved) $('who').value=saved;}catch(e){}
-$('start').addEventListener('click',startGame);
-$('again').addEventListener('click',function(){$('result').hidden=true;$('title').hidden=false;});
+$('again').addEventListener('click',function(){startGame();});
 window.addEventListener('resize',layout);
 if(window.ResizeObserver){new ResizeObserver(layout).observe($('scene'));}
 
@@ -971,16 +961,38 @@ if(window.ResizeObserver){new ResizeObserver(layout).observe($('scene'));}
   $('wolfs').innerHTML=pack;
   $('ttlBg').style.backgroundImage='url('+BASE_SRC+')';
   var stage=0, tm=0, hold=false;
+
+  var PAGES=[
+    "とある日のこと…",
+    "翔馬は 35歳。\n仕事もせず、\n今日も 昼まで寝ていた。",
+    "財布の中身は 現金1万円。\nスマホのPayも 1万円。",
+    "友達には お金を借りていて、\n母ちゃんは 毎日のように\n介護の求人を 持ってくる。",
+    "それでも 翔馬は 笑っていた。\n「ま、なんとかなるっしょ！」",
+    "これは、7日間で 自立を目指す\n男の物語である。\n\n（※道は塞がれています）"
+  ];
+  var sp=0, st4=null, typ4=false, tx4='';
+  function typeStory(txt){
+    clearInterval(st4); tx4=txt; typ4=true; var i=0; $('stoArrow').hidden=true; $('stoText').textContent='';
+    st4=setInterval(function(){ i++; $('stoText').textContent=tx4.slice(0,i); if(i>=tx4.length){ clearInterval(st4); typ4=false; $('stoArrow').hidden=false; } },55);
+  }
+  function startStory(){ clearTimeout(tm); sp=0; show(4); typeStory(PAGES[0]); }
+  function storyTap(){
+    if(typ4){ clearInterval(st4); typ4=false; $('stoText').textContent=tx4; $('stoArrow').hidden=false; return; }
+    sp++;
+    if(sp>=PAGES.length){ $('intro').hidden=true; startGame(); return; }
+    typeStory(PAGES[sp]);
+  }
   function show(n){
     clearTimeout(tm); stage=n;
-    for(var i=1;i<=3;i++) $('stg'+i).className='stg'+(i===n?' on':'');
+    for(var i=1;i<=4;i++) $('stg'+i).className='stg'+(i===n?' on':'');
     if(n===1) tm=setTimeout(function(){show(2);},2300);
     else if(n===2) tm=setTimeout(function(){show(3);},2500);
   }
   function advance(){
     if(stage===1) show(2);
     else if(stage===2) show(3);
-    else if(stage===3){ $('intro').hidden=true; try{$('who').focus();}catch(e){} }
+    else if(stage===3){ startStory(); }
+    else if(stage===4){ storyTap(); }
   }
   $('intro').addEventListener('click',advance);
   $('intro').addEventListener('keydown',function(e){ if(e.key==='Enter'||e.key===' '){e.preventDefault();advance();} });
