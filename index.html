@@ -247,7 +247,7 @@ var jobs=[], games=[], borrows=[];
 var queue=[], onDone=null, busy=true, typing=false, waiting=false, full='', timer=null, afterType=null;
 var TITLES={job:'就職活動をする',skip:'今日はサボる',game:'ゲームをする',borrow:'雄大にお金を借りる',nap:'昼寝する',study:'資格の勉強をする',
   pachi:'パチンコに行く',drink:'一人で飲みに行く',bath:'銭湯に行く',yt:'動画を見て夜更かし',mom:'カーちゃんに電話する',
-  solo:'1人遊びする',eat:'飯を食う',rest:'とりあえずまた寝る',akabane:'赤羽で飲みにいく'};
+  solo:'筋トレする',eat:'飯を食う',rest:'とりあえずまた寝る',akabane:'赤羽で飲みにいく'};
 var COST={cheap:3000,pricey:8000,girls:6000};
 
 function shuffle(a){a=a.slice();for(var i=a.length-1;i>0;i--){var j=Math.floor(Math.random()*(i+1));var t=a[i];a[i]=a[j];a[j]=t;}return a;}
@@ -381,7 +381,7 @@ var FX={
    R(260,430,140,44,'#c0583a')+R(278,474,100,10,'#5a3b2a')+R(272,404,116,28,'#ffffff')+R(292,388,76,18,'#ffffff')+
    R(300,340,12,24,'rgba(255,255,255,.8)','steam')+R(330,330,12,24,'rgba(255,255,255,.8)','steam')+R(360,342,12,24,'rgba(255,255,255,.8)','steam');},
  sleep:function(){return T(430,180,48,'#cfe8ff','Z','rise')+T(480,140,36,'#cfe8ff','z','rise')+T(520,105,26,'#cfe8ff','z','rise');},
- solo:function(){return R(210,170,10,16,'#6ec6ff','drip')+R(330,150,10,16,'#6ec6ff','drip')+T(330,110,56,'#cfe8ff','……','blink');},
+ solo:function(){return R(210,170,10,16,'#6ec6ff','drip')+R(330,150,10,16,'#6ec6ff','drip')+T(270,110,56,'#cfe8ff','ふんっ！','blink');},
  wake:function(){return R(0,0,740,615,'rgba(255,170,60,.16)')+R(24,24,190,66,'#1b1f2e')+R(30,30,178,54,'#05070d')+T(42,76,48,'#ff6a3d','15:00');},
  police:function(){return R(0,0,370,615,'rgba(255,40,40,.3)','siren1')+R(370,0,370,615,'rgba(40,90,255,.3)','siren2')+phone(380,340,'#ffffff');},
  pachi:function(){return R(185,290,370,270,'#2b1b6b')+R(197,302,346,246,'#14083a')+R(215,320,70,40,'#ff4d6d','blink')+R(300,320,70,40,'#ffd24a','siren1')+R(385,320,70,40,'#3aa0ff','siren2')+R(470,320,56,40,'#2ecc8f','blink')+
@@ -726,9 +726,12 @@ function buildDrink(v){
 }
 function buildSolo(){
   return [
-    st('翔馬','…ちょっと、1人の時間。',{e:'solo'}),
-    st('翔馬','う、、ふう…。',{shake:true,fx:{hp:-40}}),
-    st('','翔馬の体力が ごっそり減った。')
+    st('翔馬','今日は筋トレっしょ！いいね！ワンチャン痩せるっしょ！',{e:'solo'}),
+    st('','翔馬は ダンベルを 持ち上げた。'),
+    st('翔馬','ふんっ…！ぐ、ぐぅぅ…！',{shake:true}),
+    st('','ピキッ！ 腰から 嫌な音がした。',{fx:{hp:-40}}),
+    st('翔馬','う、、ふう…。やば、腰が…！'),
+    st('','筋トレは 失敗に終わった。翔馬の体力が ごっそり減った。')
   ];
 }
 function buildEat(){
