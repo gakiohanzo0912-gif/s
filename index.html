@@ -286,16 +286,19 @@ var HUNT=[
  [
   {q:'どんな仕事がいいかな？',o:[
    {t:'自分の経験が活かせる、事務職の求人',g:1},
+   {t:'イベント運営スタッフ（パリピ向き！）',ev:1},
    {t:'時給が高い、仕事内容『ひみつ』の求人',r:'ひみつ…？こわ。やっぱいいや。'},
    {t:'家から一番遠い求人（片道3時間）',r:'遠っ！めんどくさくなってきた。'},
    {t:'『社長候補募集』の求人',r:'…さすがに無理っしょ。やっぱいいや。'}]},
   {q:'条件を見て、選ぼうかな〜。',o:[
    {t:'通勤しやすい、未経験OKの営業職',g:1},
+   {t:'イベント運営スタッフ（パリピ向き！）',ev:1},
    {t:'週1勤務で月収100万の求人',r:'いや、絶対うそじゃん。…やっぱいいや。'},
    {t:'『アットホームな職場です！』しか書いてない求人',r:'中身がない…。めんどくさ。'},
    {t:'全部ひらがなで書かれた求人',r:'よみにくい…。やっぱいいや。'}]},
   {q:'どれに応募するか、考えよう！',o:[
    {t:'休みも取れそうな、ITサポート職',g:1},
+   {t:'イベント運営スタッフ（パリピ向き！）',ev:1},
    {t:'『夢を追う仲間募集！（無給）』',r:'無給…。やっぱいいや。'},
    {t:'『経験者のみ。未経験は帰れ』',r:'帰れって言われた…。心が折れた。'},
    {t:'『誰でもできる簡単なお仕事（内容不明）』',r:'内容不明は、さすがにな…。めんどくさくなってきた。'}]}
@@ -320,7 +323,7 @@ var HUNT=[
 ];
 var GOODR=[
  ['いいね！ちゃんと探せそうじゃん！','お、いい情報！やる気出てきた！','プロに相談…！頼れる〜！'],
- ['お、条件いいじゃん！ワンチャンあるっしょ！','これは良さげ！いいね！','ここなら続けられそう！いいね！'],
+ ['お、条件いいじゃん！いけそう！','これは良さげ！いいね！','ここなら続けられそう！いいね！'],
  ['よし、完璧！やば、俺できてる！','おぉ、いい感じに書けた！やば！','最終チェックもバッチリ！']
 ];
 var GAMES=[
@@ -336,7 +339,7 @@ var BORROWS=[
 var FAILS=[
  [['翔馬','いいね！今日は一人飲みっしょ！'],['','居酒屋の前で、財布を確認した。'],['','財布の中身は 0円だった。'],['翔馬','Payは…あ、残高足りない！'],['翔馬','うーん、お金ないや。ま、いっか！']],
  [['翔馬','Pay決済でいくっしょ！アゲてこ〜！'],['店員','お客さん、Payの残高、マイナスって出てますよ〜。'],['翔馬','え、まじ！？課金しすぎた…やば！'],['翔馬','うーん、お金ないや。']],
- [['翔馬','ワンチャン、顔パスでいけるっしょ！'],['','行きつけの店に入ると…'],['店員','あ、前回のツケ、まだ残ってますよ。'],['翔馬','…ツケって、時効あったっけ？やば！']],
+ [['翔馬','顔パスでいけるっしょ！'],['','行きつけの店に入ると…'],['店員','あ、前回のツケ、まだ残ってますよ。'],['翔馬','…ツケって、時効あったっけ？やば！']],
  [['翔馬','一人飲みっていいよね〜。静かで。'],['','店の前で、ポケットを探った。'],['翔馬','出てきたのは、レシートと…ガム。'],['翔馬','うーん、お金ないや。ガムで乾杯！いいね！']]
 ];
 var FAIL_PRICEY=[['翔馬','たまには高級路線っしょ！'],['','店の前の価格表を見た。刺身が1皿 2,800円だった。'],['翔馬','…うーん、お金ないや。ま、いっか！']];
@@ -349,7 +352,7 @@ var GREETS=[
  'いいね！今日もアゲてこ〜！',
  'お、天気いいじゃん！いいね！',
  '今日はちゃんと選んでいくぞ〜！',
- '最終日！ワンチャンあるっしょ！'
+ '最終日！今日こそなんとかなるっしょ！'
 ];
 
 /* ================= pixel props (stage coords 740x615) ================= */
@@ -372,6 +375,7 @@ var FX={
  borrow:function(){return '';},
  bar:function(){return mug(470,300)+T(430,280,40,'#ffd24a','乾杯！','rise');},
  fight:function(){return R(80,100,60,60,'#ff3b3b','blink')+T(90,148,44,'#ffffff','怒')+R(600,190,60,60,'#ff3b3b','blink')+T(610,238,44,'#ffffff','怒');},
+ rage:function(){return R(60,90,70,70,'#ff3b3b','blink')+T(72,145,54,'#ffffff','怒')+R(610,170,70,70,'#ff3b3b','blink')+T(622,225,54,'#ffffff','怒')+T(110,330,64,'#ff3b3b','ムキー！！','pop');},
  hit:function(){return '<g class="swing">'+mug(580,130)+'</g>'+T(190,110,70,'#ff3b3b','ガッ！！','pop')+star(150,150)+star(340,120)+star(120,240);},
  night:function(){return R(600,30,64,64,'#fff3b0')+R(620,30,44,64,'#2b3350')+'<g class="slide">'+
    '<circle cx="50" cy="480" r="38" fill="none" stroke="#e8e8f0" stroke-width="9"/><circle cx="210" cy="480" r="38" fill="none" stroke="#e8e8f0" stroke-width="9"/>'+
@@ -391,7 +395,7 @@ var FX={
    '<circle cx="330" cy="400" r="26" fill="none" stroke="#ffd24a" stroke-width="12"/>'+R(354,394,90,12,'#ffd24a')+R(404,406,12,26,'#ffd24a')+R(428,406,12,18,'#ffd24a');},
  jail:function(){var o='';for(var i=0;i<10;i++){o+=R(30+i*72,0,20,615,'#1c2028');}return o+R(0,36,740,16,'#1c2028')+R(0,560,740,16,'#1c2028')+R(250,470,240,74,'#c01c1c')+T(290,528,58,'#ffffff','逮捕');}
 };
-var FILTER={pachi:'f-pachi',jackpot:'f-pachi',bar:'f-bar',night:'f-night',sleep:'f-sleep',solo:'f-solo',wake:'f-wake',goal:'f-wake',police:'f-police',jail:'f-jail',fight:'f-fight',hit:'f-fight',akabane:'f-aka'};
+var FILTER={pachi:'f-pachi',jackpot:'f-pachi',bar:'f-bar',night:'f-night',sleep:'f-sleep',solo:'f-solo',wake:'f-wake',goal:'f-wake',police:'f-police',jail:'f-jail',fight:'f-fight',hit:'f-fight',rage:'f-fight',akabane:'f-aka'};
 function bandage(){
   return '<g transform="rotate(-14 235 203)">'+R(203,193,64,20,'#f2c9a0')+R(225,193,20,20,'#e3b184')+'</g>'+R(300,262,30,16,'rgba(110,60,150,.6)');
 }
@@ -407,7 +411,7 @@ function setScene(key){
   $('hurtSvg').hidden=(key==='akabane')||!!IMGS[key]||!(S&&S.hurt);
   if(key==='akabane'){tag.textContent='赤羽 一番街'; tag.dataset.k='aka'; tag.hidden=false;}
   else if(tag.dataset.k==='aka'){tag.dataset.k=''; tag.hidden=true;}
-  if(key==='hit'){var f=$('flash');f.classList.remove('on');void f.offsetWidth;f.classList.add('on');}
+  if(key==='hit'||key==='rage'){var f=$('flash');f.classList.remove('on');void f.offsetWidth;f.classList.add('on');}
 }
 function layout(){
   var sc=$('scene'),stg=$('stage'),W=sc.clientWidth,H=sc.clientHeight;
@@ -528,7 +532,7 @@ function kaaSteps(ok){
   return [st('カーちゃん',j.k,{call:g,fx:{motiv:-3}}),st('翔馬',j.r)];
 }
 function startHunt(){
-  S.c.job++;
+  S.c.job++; S.evChosen=false;
   play([
     st('','朝。翔馬は 就職活動を はじめることにした。',{e:'job',fx:{hp:-5}}),
     st('翔馬','よし！今日こそ、ちゃんと探すぞ〜！')
@@ -541,14 +545,17 @@ function huntStage(i){
 }
 function huntPick(i,o){
   var si=(S.c.job-1)%3;
-  if(o.g){
-    var good=[st('翔馬',GOODR[i][si],{fx:{motiv:3,indep:3}})];
+  if(o.g||o.ev){
+    if(o.ev) S.evChosen=true;
+    var good=[st('翔馬',o.ev?'イベント運営か！パリピ向きじゃん！これ俺の天職っしょ！':GOODR[i][si],{fx:{motiv:3,indep:3}})];
     if(i<2){ play(good,function(){huntStage(i+1);}); }
     else{
       good=good.concat([
         st('','履歴書が 完成した！ 翔馬は 応募先に 送信した！',{fx:{indep:8,motiv:10},fn:function(){S.resumes++;S.c.huntOk++;}}),
         st('翔馬','送信っと！…え、俺、やればできるじゃん！いいね！')
-      ]).concat(kaaSteps(true));
+      ]);
+      if(S.evChosen) good=good.concat(interviewSteps());
+      good=good.concat(kaaSteps(true));
       play(good,function(){afterAction('job');});
     }
   }else{
@@ -558,6 +565,20 @@ function huntPick(i,o){
       st('','めんどくさくなって、翔馬は 就職活動をやめてしまった。',{fx:{motiv:-6,indep:-1}})
     ].concat(kaaSteps(false)),function(){afterAction('job');});
   }
+}
+function interviewSteps(){
+  S.c.interview++;
+  return [
+    st('','応募先から すぐに 連絡が来た。さっそく、面接をすることになった。',{shake:true}),
+    st('面接官','では、面接を始めます。イベント業界を志望とのことですが…'),
+    st('面接官','イベントとは、何が思い浮かびますか？'),
+    st('翔馬','BBQ(ビービーキュー)ですね！'),
+    st('面接官','…ふっ。（失笑）'),
+    st('面接官','では、次の質問です。あなたが 頑張ってきたことは 何ですか？'),
+    st('翔馬','中学の時の、ソフトテニスです！'),
+    st('面接官','…はぁ。そうですか。（ややあきれ顔）'),
+    st('翔馬','手応えあった気がする！…たぶん！',{fn:function(){S.eventFail=true;}})
+  ];
 }
 function buildSkip(){
   return [
@@ -605,7 +626,7 @@ function buildPachi(){
   return [
     st('翔馬','カーちゃんにもらった1万円…これはもう、パチンコ行くしかないっしょ！',{e:'pachi',fx:{motiv:6}}),
     st('','パチンコ屋に入って、1万円を握りしめて台に座った。',{fx:{cash:-10000}}),
-    st('翔馬','頼む…ワンチャンあるっしょ！'),
+    st('翔馬','頼む…当たってくれ…！'),
     st('','…ピカァァァ！！ 台が 激しく光り出した！',{e:'jackpot',shake:true}),
     st('翔馬','え、え、え！？確変！？やば！さいこぉぉ！'),
     st('','奇跡が起きた。1万円が 3万円になって返ってきた！（2万円の勝ち）',{fx:{cash:30000,motiv:15}}),
@@ -635,7 +656,7 @@ function bikeSteps(){
   S.c.bike++;
   return [
     st('','帰り道。駐輪場に 鍵のささった自転車が あった。',{e:'night'}),
-    st('翔馬','ちょっと借りるだけっしょ！ワンチャンあるっしょ！'),
+    st('翔馬','ちょっと借りるだけっしょ！すぐ返すし！'),
     st('','翔馬は 自転車を盗んだ。',{fn:function(){S.stolen=true;}}),
     st('翔馬','夜風が気持ちいい〜！いいね！（罪悪感は寝て忘れる）')
   ];
@@ -726,7 +747,7 @@ function buildDrink(v){
 }
 function buildSolo(){
   return [
-    st('翔馬','今日は筋トレっしょ！いいね！ワンチャン痩せるっしょ！',{e:'solo'}),
+    st('翔馬','今日は筋トレっしょ！いいね！ちょっとは痩せるっしょ！',{e:'solo'}),
     st('','翔馬は ダンベルを 持ち上げた。'),
     st('翔馬','ふんっ…！ぐ、ぐぅぅ…！',{shake:true}),
     st('','ピキッ！ 腰から 嫌な音がした。',{fx:{hp:-40}}),
@@ -750,6 +771,7 @@ function buildRest(){
 }
 function buildAkabane(){
   S.c.aka++;
+  var bill=Math.max(0,S.cash-9000);
   return [
     st('','夜。赤羽の 一番街にやってきた。',{e:'akabane'}),
     st('翔馬','おぉ、赤羽！雰囲気あるじゃん！'),
@@ -762,9 +784,36 @@ function buildAkabane(){
     st('児玉','へぇ〜。…ちょっと、財布見せて？'),
     st('翔馬','え、いや、それは…やば！',{shake:true}),
     st('雄大','あっ、1万円どころじゃないぞ。'+yen(S.cash)+'入ってる。'),
-    st('児玉','…ふーん。じゃあ、11月の返済予定だった8,000円、今回収ね。'),
+    st('児玉','…ふーん。じゃあ、11月の返済予定だった8,000円、今日もらうね。'),
+    st('翔馬','ちょ、ちょっと待って！でも、11月って言ったの覚えてない？'),
+    st('児玉','覚えてるよ。11月までに返す、って約束でしょ。'),
+    st('児玉','でも、今日返しちゃダメなんて、言ってないよね？'),
+    st('児玉','お金があるのに「11月まで待って」は、通らないでしょ。'),
+    st('雄大','うん、正論だな。'),
+    st('翔馬','ぐっ…。確かに…。論破された…。',{shake:true}),
     st('','児玉に 8,000円 回収された。',{fx:{cash:-8000,motiv:-6},fn:function(){S.repaid=true;}}),
     st('翔馬','うそでしょ…！？…ま、いっか！今日は飲もう！'),
+    st('','翔馬は 見栄を張って、ここの会計を 全部払った。（'+yen(bill)+'）',{fn:function(){S.cash=Math.min(S.cash,1000);paint();}}),
+    st('','翔馬の 残金は 1,000円になった。',{fx:{motiv:-3}}),
+    st('雄大','…やば、翔馬、残り1,000円って。'),
+    st('児玉','じゃあさ、3人で1,000円ずつ出して、スロット乗り打ちしに行かない？'),
+    st('翔馬','お、いいね！代表で、俺が打つわ！',{e:'pachi',fn:function(){S.cash=0;paint();}}),
+    st('','3人で 1,000円ずつ出し合い、翔馬が 代表で スロットを 打つことにした。'),
+    st('','…ピカァァァ！！ 台が 光り出した！',{e:'jackpot',shake:true}),
+    st('翔馬','え、うそ！？当たった！？やば！'),
+    st('','奇跡が起きた。1万円 勝った！',{fx:{cash:10000,motiv:12}}),
+    st('雄大','マジか翔馬！それで、もう1軒行こうぜ！'),
+    st('','本来なら、この1万円で 飲みに行くところだ。3人は 赤羽の 居酒屋に 戻った。',{e:'akabane',fx:{cash:-10000}}),
+    st('','もう1軒目の会計は、1万円。みんなで 楽しく 飲んだ。',{fx:{motiv:6}}),
+    st('翔馬','いや〜、今日は俺が奢ったから、俺って懐が広いよな〜！'),
+    st('雄大','いや、乗り打ちだから、懐広くないでしょw'),
+    st('児玉','そうそう。みんなで出したお金だし。'),
+    st('翔馬','は？納得いかないんだけど！'),
+    st('翔馬','俺が打ったのに、ありがとうも言われてない！',{e:'rage',shake:true,fx:{motiv:-8}}),
+    st('翔馬','普通、「ありがとう」だろ！俺が勝たせたんだぞ！',{shake:true}),
+    st('雄大','えっ、ごめんごめんw ありがとう！'),
+    st('児玉','ありがとー、翔馬様ー。（棒読み）'),
+    st('翔馬','心がこもってない！',{shake:true}),
     st('','その夜は、朝まで飲み明かした。',{e:'sleep',fn:function(){S.drank=true;}})
   ];
 }
@@ -816,8 +865,17 @@ function endingSteps(){
     a.push(st('警察','もしもし。駐輪場の自転車、あなたが乗って行きましたね？',{call:{l:'着信：警察',k:'call'}}));
     a.push(st('翔馬','え？…いや、借りただけっていうか…やば！'));
     a.push(st('警察','署まで、ご同行ください。'));
-    a.push(st('翔馬','…ま、なんとかなるっしょ！ワンチャン…ないか。'));
+    a.push(st('翔馬','…ま、なんとかなるっしょ！…ならないか。'));
     a.push(st('','翔馬は 逮捕された。',{e:'jail'}));
+  }else if(S.eventFail){
+    S.end='interview';
+    a.push(st('','翔馬の スマホが 鳴った。',{e:'phone'}));
+    a.push(st('採用担当','翔馬さん、先日の面接の結果ですが…',{call:{l:'着信：採用担当',k:'call'}}));
+    a.push(st('採用担当','誠に残念ながら、今回は 見送らせていただくことになりました。'));
+    a.push(st('翔馬','え…！？BBQ、ダメだった…？'));
+    a.push(st('採用担当','…今後のご活躍を、お祈り申し上げます。'));
+    a.push(st('翔馬','祈られた！？…ま、なんとかなるっしょ！'));
+    a.push(st('','翔馬は 面接に落ちた。自立への道は、また遠のいた。',{e:'none'}));
   }else if(S.resumes>=3){
     S.end='home';
     a.push(st('','翔馬のスマホが 鳴った。',{e:'phone'}));
@@ -901,12 +959,13 @@ function morning(){
 function showResult(){
   $('rIndep').textContent=S.indep+' / 100';
   var home=(S.end==='home');
-  $('rVerdict').textContent=home?'判定：自立して一人暮らし':(S.end==='jail'?'判定：逮捕':'判定：路上暮らし');
+  $('rVerdict').textContent=home?'判定：自立して一人暮らし':(S.end==='jail'?'判定：逮捕':(S.end==='interview'?'判定：面接落ち':'判定：路上暮らし'));
   $('rGift').textContent=home?'プレゼント（大）':'プレゼント（小）';
   $('rGift').className='gift'+(home?' big':'');
   $('rSub').textContent=home?'ついに自立！翔馬、プレゼント（大）を獲得しました！':'自立できていれば「プレゼント（大）」でした。';
   var c=S.c, rows=[
     ['履歴書を送った社数',S.resumes+'社'],
+    ['面接を受けた回数',c.interview+'回'],
     ['就職活動をやめた回数',c.huntQuit+'回'],
     ['カーちゃんの介護求人',c.kaa+'回'],
     ['サボった回数',c.skip+'回'],
@@ -931,9 +990,9 @@ function showResult(){
 /* ================= start ================= */
 function freshState(name){
   return {day:0,slot:0,motiv:20,indep:5,hp:80,cash:10000,pay:10000,name:name||'',menu:['job','skip'],
-    drank:false,hang:false,stolen:false,hurt:false,end:'',resumes:0,lostCash:0,
+    drank:false,hang:false,stolen:false,hurt:false,end:'',resumes:0,lostCash:0,evChosen:false,eventFail:false,
     pachiDay:4+Math.floor(Math.random()*2),pachiDone:false,akaNext:false,repaid:false,
-    c:{job:0,kaa:0,huntOk:0,huntQuit:0,skip:0,drinkOk:0,drinkFail:0,fight:0,bike:0,game:0,borrow:0,nap:0,study:0,bath:0,yt:0,mom:0,solo:0,eat:0,rest:0,nights:0,pachi:0,aka:0,nanpa:0}};
+    c:{job:0,kaa:0,huntOk:0,huntQuit:0,skip:0,drinkOk:0,drinkFail:0,fight:0,bike:0,game:0,borrow:0,nap:0,study:0,bath:0,yt:0,mom:0,solo:0,eat:0,rest:0,nights:0,pachi:0,aka:0,nanpa:0,interview:0}};
 }
 function startGame(){
   var nm='';
