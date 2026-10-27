@@ -623,7 +623,6 @@ function buildPachi(){
 function askVenue(){
   ask('今日は、どこで飲もうかな〜？',[
     {label:'安い居酒屋（3,000円）',fn:function(){drinkAt('cheap');}},
-    {label:'高い居酒屋（8,000円）',fn:function(){drinkAt('pricey');}},
     {label:'ガールズバー（6,000円）',fn:function(){drinkAt('girls');}},
     {label:'やっぱやめる',cls:'ghost',fn:function(){play([st('翔馬','…やっぱ、やめとくか。',{idle:true})],unlock);}}
   ]);
