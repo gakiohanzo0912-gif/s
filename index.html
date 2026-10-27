@@ -540,13 +540,13 @@ function startHunt(){
 }
 function huntStage(i){
   var set=HUNT[i][(S.c.job-1)%3];
-  var items=shuffle(set.o).map(function(o){return {label:o.t,fn:function(){huntPick(i,o);}};});
+  var items=shuffle(set.o.filter(function(o){return !(o.ev&&S.evUsed);})).map(function(o){return {label:o.t,fn:function(){huntPick(i,o);}};});
   ask(set.q,items);
 }
 function huntPick(i,o){
   var si=(S.c.job-1)%3;
   if(o.g||o.ev){
-    if(o.ev) S.evChosen=true;
+    if(o.ev){S.evChosen=true;S.evUsed=true;}
     var good=[st('翔馬',o.ev?'イベント運営か！いいじゃん！これ俺の天職っしょ！':GOODR[i][si],{fx:{motiv:3,indep:3}})];
     if(i<2){ play(good,function(){huntStage(i+1);}); }
     else{
@@ -987,7 +987,7 @@ function showResult(){
 /* ================= start ================= */
 function freshState(name){
   return {day:0,slot:0,motiv:20,indep:5,hp:80,cash:10000,pay:10000,name:name||'',menu:['job','skip'],
-    drank:false,hang:false,stolen:false,hurt:false,end:'',resumes:0,lostCash:0,evChosen:false,eventFail:false,
+    drank:false,hang:false,stolen:false,hurt:false,end:'',resumes:0,lostCash:0,evChosen:false,evUsed:false,eventFail:false,
     pachiDay:4+Math.floor(Math.random()*2),pachiDone:false,akaNext:false,repaid:false,
     c:{job:0,kaa:0,huntOk:0,huntQuit:0,skip:0,drinkOk:0,drinkFail:0,fight:0,bike:0,game:0,borrow:0,nap:0,study:0,bath:0,yt:0,mom:0,solo:0,eat:0,rest:0,nights:0,pachi:0,aka:0,nanpa:0,interview:0}};
 }
