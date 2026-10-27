@@ -617,7 +617,11 @@ function buildPachi(){
     st('','…ピカァァァ！！ 台が 激しく光り出した！',{e:'jackpot',shake:true}),
     st('翔馬','え、え、え！？確変！？やば！さいこぉぉ！'),
     st('','奇跡が起きた。1万円が 3万円になって返ってきた！（2万円の勝ち）',{fx:{cash:30000,motiv:15}}),
-    st('翔馬','よっしゃ！なんか明日、いいことありそう！')
+    st('翔馬','よっしゃ！今日はツイてる！'),
+    st('雄大','翔馬何してるのー？',{call:{l:'LINE：雄大・児玉・翔馬',k:'line'}}),
+    st('児玉','赤羽に飲み行こ！',{call:{l:'LINE：雄大・児玉・翔馬',k:'line'}}),
+    st('翔馬','お、いいじゃん！いこう！',{call:null}),
+    st('','翔馬は パチンコ屋を出て、そのまま 赤羽へ向かった。')
   ];
 }
 function askVenue(){
@@ -892,7 +896,7 @@ function choose(k){
   else if(k==='bath'){S.c.bath++;steps=buildBath();}
   else if(k==='yt'){S.c.yt++;steps=buildYt();}
   else if(k==='mom'){S.c.mom++;steps=buildMom();}
-  else if(k==='pachi'){S.c.pachi++;S.akaNext=true;steps=buildPachi();}
+  else if(k==='pachi'){S.c.pachi++;steps=buildPachi().concat(buildAkabane());}
   else if(k==='akabane'){steps=buildAkabane();}
   else if(k==='solo'){S.c.solo++;steps=buildSolo();}
   else if(k==='eat'){S.c.eat++;steps=buildEat();}
