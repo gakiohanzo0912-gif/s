@@ -597,8 +597,9 @@ function buildGame(){
 function buildBorrow(){
   var b=borrows[(S.c.borrow-1)%borrows.length];
   return [
-    st('','翔馬は スマホを手に取った。',{e:'borrow'}),
-    st('翔馬','雄大に連絡してみるか〜。いいね！'),
+    st('','翔馬は スマホゲームを 開いた。',{e:'borrow'}),
+    st('翔馬','スマホゲームでイベントきてるけど、お金が足りないな…'),
+    st('翔馬','雄大に連絡してみよう。'),
     st('翔馬','『ごめん！課金したくてPayPayで2万貸して！』',{call:{l:'LINE：雄大へ送信',k:'line'}}),
     st('雄大','お金ないんだから辞めとけよ。',{call:{l:'LINE：雄大',k:'line'}}),
     st('翔馬','えー、頼むよ〜！ちょっとだけ！'),
@@ -729,19 +730,15 @@ function buildDrink(v){
   a.push(st('',(m==='cash'?'現金で':'Pay決済で')+' 飲み始めた。（3,000円）',{fx:mix(m,3000)}));
   a.push(st('','酒が進んで、翔馬のテンションが おかしくなってきた。'));
   return {pre:a,tail:function(){
-    var t=[], r=Math.random();
-    if(r<0.5){
-      S.c.fight++;
-      t.push(st('翔馬','おい、見てんじゃねえよ！',{e:'fight',shake:true}));
-      t.push(st('客','あ？今なんつった？'));
-      t.push(st('翔馬','やば、言い過ぎた？…いや、もう引けないっしょ！'));
-      t.push(st('','ガッ！！ ジョッキで 頭をぶん殴られた。',{e:'hit',fx:{hp:-25},fn:function(){S.hurt=true;$('hurtSvg').hidden=false;}}));
-      t.push(st('翔馬','いってぇ！やば！血出てない！？',{e:'none'}));
-      t.push(st('','翔馬は 怪我をして、フラフラで帰ってきた。'));
-    }else{
-      t.push(st('翔馬','…今日は平和だったな。いいね！',{e:'none'}));
-      t.push(st('','何事もなく、飲み終えた。'));
-    }
+    var t=[];
+    S.c.fight++;
+    t.push(st('翔馬','おい、見てんじゃねえよ！',{e:'fight',shake:true}));
+    t.push(st('客','あ？今なんつった？'));
+    t.push(st('翔馬','やば、言い過ぎた？…いや、もう引けないっしょ！'));
+    t.push(st('','翔馬は 勢いで 殴りかかった。…が、あっさり かわされた。'));
+    t.push(st('','ガッ！！ ジョッキで 頭をぶん殴られた。返り討ちだ。',{e:'hit',fx:{hp:-25},fn:function(){S.hurt=true;$('hurtSvg').hidden=false;}}));
+    t.push(st('翔馬','いってぇ！やば！血出てない！？',{e:'none'}));
+    t.push(st('','翔馬は 怪我をして、フラフラで帰ってきた。'));
     return t;
   }};
 }
